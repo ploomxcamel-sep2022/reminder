@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Re:マインダー</string>
+    <string name="action_settings">Settings</string>
+    <string name="save">登録</string>
+    <string name="date_time">日時：</string>
+    <string name="delete">削除</string>
+    <string name="old_time_msg">過去の時間は登録出来ません</string>
+    <string name="date_time_select">日時選択</string>
+    <string name="edit">編集</string>
+    <string name="hint_msg">メモ</string>
+    <string name="caution_msg">日時の設定をして下さい</string>
+    <string name="info_msg">INFO</string>
+    <string name="old_plan">過去の予定</string>
+</resources>
