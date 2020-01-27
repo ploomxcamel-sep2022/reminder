@@ -47,11 +47,14 @@ class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0
         var scheduleId_int: Int? = scheduleId?.toInt()
         //スマートキャストでInt?をIntとして扱える（Int?とIntは別物である）
         if (scheduleId_int is Int) {
-            val am = context.getSystemService(ALARM_SERVICE) as AlarmManager
+
+            var mAlarm = mAlarmManager()
+            mAlarm.cancelAlarm(context, scheduleId_int)
+            /*val am = context.getSystemService(ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, AlarmBroadcastReceiver::class.java)
             intent.putExtra("scheduleId", scheduleId_int)
             var pending = PendingIntent.getBroadcast(context, scheduleId_int, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-            am.cancel(pending)
+            am.cancel(pending)*/
         }
 
     }

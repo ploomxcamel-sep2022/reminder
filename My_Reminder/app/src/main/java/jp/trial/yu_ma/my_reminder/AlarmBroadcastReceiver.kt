@@ -15,6 +15,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
+        /*
         //NotificationManagerのインスタンスの取得
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         // カテゴリー名（通知設定画面に表示される情報）
@@ -34,7 +35,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             }
             //チャンネルを登録し設定アプリで見える様にする
             notificationManager.createNotificationChannel(mChannel)
-        }
+        }*/
 
         //端末の再起動後の処理（アラームの再セット）
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
@@ -54,14 +55,16 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                     } else { //データベースから存在するスケージュールを再セット
                         //println("ID: " + schedule_data?.id + " のスイッチは " + schedule_data?.notice_switch + " です")
                         if (schedule_data.notice_switch == "YET") {
-                            var am = context.getSystemService(ALARM_SERVICE) as AlarmManager
+                            /*var am = context.getSystemService(ALARM_SERVICE) as AlarmManager
                             var intent = Intent(context, AlarmBroadcastReceiver::class.java)
                             intent.putExtra("scheduleId", sarch_Id)
                             val pending =
-                                PendingIntent.getBroadcast(context, sarch_Id, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                                PendingIntent.getBroadcast(context, sarch_Id, intent, PendingIntent.FLAG_UPDATE_CURRENT)*/
                             var triggerTime = Calendar.getInstance()
                             triggerTime.time = schedule_data?.dateTime
-                            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.timeInMillis, pending)
+                            var mAlarm = mAlarmManager()
+                            mAlarm.setAlarm(context, triggerTime, sarch_Id)
+                            //am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.timeInMillis, pending)
                         } else { /*何もしない*/ }
                     }
                 }
@@ -83,7 +86,11 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                     val datetime: String? =
                         android.text.format.DateFormat.format("yyyy'年'MM'月'dd'日、'(EEE) kk'時'mm'分'", schedule_data?.dateTime)
                             .toString()
-                    val intent = Intent(context, MainActivity::class.java).apply {
+
+                    //通知を出す
+                    var mNotice = mNoticeManager()
+                    mNotice.notify(context, intent_Id, text, datetime)
+                    /*val intent = Intent(context, MainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
@@ -95,12 +102,13 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                             setContentText(datetime)
                             setContentIntent(pendingIntent)
                             setAutoCancel(true)
-                        }.build()
+                        }.build()*/
                     realm.executeTransaction {
                         schedule_data.notice_switch = "DONE"
                     }
                     realm.close()
-                    notificationManager.notify(intent_Id, notification)
+                    Log.d("ログ","Broadcast_close")
+                    //notificationManager.notify(intent_Id, notification)
                 } else { /*何もしない*/ }
             } else { /*何もしない*/ }
 

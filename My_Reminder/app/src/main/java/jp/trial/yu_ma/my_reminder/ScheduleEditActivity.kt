@@ -101,7 +101,8 @@ class ScheduleEditActivity : AppCompatActivity()
                                 var triggerTime = Calendar.getInstance()
                                 triggerTime.time = schedule.dateTime
                                 var scheduleId_int: Int = schedule.id.toInt()
-                                setAlarmManager(triggerTime, scheduleId_int)
+                                var mAlarm = mAlarmManager()
+                                mAlarm.setAlarm(applicationContext, triggerTime, scheduleId_int)
 
                             }
 
@@ -133,7 +134,8 @@ class ScheduleEditActivity : AppCompatActivity()
                                 var scheduleId_int: Int? = schedule?.id?.toInt()
                                 //スマートキャストでInt?をIntとして扱える（Int?とIntは別物である）
                                 if (scheduleId_int is Int) {
-                                    setAlarmManager(triggerTime, scheduleId_int)
+                                    var mAlarm = mAlarmManager()
+                                    mAlarm.setAlarm(applicationContext, triggerTime, scheduleId_int)
                                 }
                             }
 
@@ -164,7 +166,8 @@ class ScheduleEditActivity : AppCompatActivity()
                 var scheduleId_int: Int? = scheduleId?.toInt()
                 //スマートキャストでInt?をIntとして扱える（Int?とIntは別物である）
                 if (scheduleId_int is Int) {
-                    cancelAlarmManager(scheduleId_int)
+                    var mAlarm = mAlarmManager()
+                    mAlarm.cancelAlarm(applicationContext, scheduleId_int)
                 }
             }
 
@@ -196,7 +199,7 @@ class ScheduleEditActivity : AppCompatActivity()
         }
     }
 
-    //トリガー時刻のセット
+    /*トリガー時刻のセット
     private fun setAlarmManager(triggerTime: Calendar, scheduleId_int: Int) {
 
         val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -213,7 +216,7 @@ class ScheduleEditActivity : AppCompatActivity()
         intent.putExtra("scheduleId", scheduleId_int)
         val pending = PendingIntent.getBroadcast(this, scheduleId_int, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         am.cancel(pending)
-    }
+    }*/
 
     //データベースを閉じる処理
     override fun onDestroy() {

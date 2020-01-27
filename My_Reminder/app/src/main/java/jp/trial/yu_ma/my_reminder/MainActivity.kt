@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -109,7 +110,8 @@ class MainActivity : AppCompatActivity() {
     //ライフサイクルメソッドであるonDestroyメソッドをオーバーライドし、closeメソッドでRealmのインスタンスを破棄しリソースを開放
     override fun onDestroy() {
         super.onDestroy()
-        realm.close()
+      realm.close()
+        Log.d("ログ","main_close")
     }
 
 /*

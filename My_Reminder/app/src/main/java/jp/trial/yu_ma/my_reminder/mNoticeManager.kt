@@ -13,14 +13,14 @@ class mNoticeManager {
     private lateinit var name: String
     private lateinit var id: String
 
-    public fun notify(context: Context) {
+    fun notify(context: Context, intent_Id: Int, text: String?, datetime: String?) {
 
         //NotificationManagerのインスタンスの取得
         notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         // カテゴリー名（通知設定画面に表示される情報）
         name = "通知設定"
         // システムに登録するChannelのID
-        id = "Re:minder_Notification_Channel"
+        id = "Re:minder_Notification_Channel_Id"
 
         // Channelの取得と生成
         if (notificationManager.getNotificationChannel(id) == null) {
@@ -34,6 +34,7 @@ class mNoticeManager {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
         val notification = NotificationCompat
             .Builder(context, id) //第２引数のidで通知にチャンネルを紐づける
