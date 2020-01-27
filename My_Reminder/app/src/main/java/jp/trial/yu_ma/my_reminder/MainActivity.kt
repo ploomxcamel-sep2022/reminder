@@ -18,7 +18,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    //Realmクラスのプロパティ、onCreateで初期化するのでlateinit修飾子を付ける
+    //Realmクラスのプロパティ、onCreateで初期化するのでlateinit修飾子を付ける（遅延初期化）
     private lateinit var realm: Realm
 
     override fun onCreate(savedInstanceState: Bundle?) {

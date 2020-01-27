@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -72,9 +73,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
 
         } else {
 
-            /*
-        *通常のブロードキャストの処理（通知を出す処理）
-         **/
+            //通常のブロードキャストの処理（通知を出す処理）
             val intent_Id: Int = intent.getIntExtra("scheduleId", 0)
             val realm: Realm = Realm.getDefaultInstance() //Realmクラスのインスタンスを取得、データベース使用準備完了
             var schedule_data: Schedule? = realm.where<Schedule>().equalTo("id", intent_Id).findFirst()
@@ -98,7 +97,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                             setAutoCancel(true)
                         }.build()
                     realm.executeTransaction {
-                            schedule_data.notice_switch = "DONE"
+                        schedule_data.notice_switch = "DONE"
                     }
                     realm.close()
                     notificationManager.notify(intent_Id, notification)
