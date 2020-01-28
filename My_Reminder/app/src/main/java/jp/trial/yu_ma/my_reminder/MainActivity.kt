@@ -85,12 +85,6 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             val intent = Intent(this, ScheduleEditActivity::class.java)
             startActivity(intent)
-
-/*         //自動生成された仮の処理
-*           Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-*           .setAction("Action", null).show()
-**/
-
         }
 
         //RecyclerViewの項目がタップされた時の処理をアダプターに用意したsetOnItemClickListenerメソッドに登録
@@ -115,7 +109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 /*
-      //右上のメニュー関連
+      //右上のメニュー関連（今は使用しない）
       override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)

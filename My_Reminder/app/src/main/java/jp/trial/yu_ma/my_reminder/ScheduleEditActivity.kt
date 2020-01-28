@@ -1,9 +1,6 @@
 package jp.trial.yu_ma.my_reminder
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.format.DateFormat
@@ -108,13 +105,6 @@ class ScheduleEditActivity : AppCompatActivity()
 
                             finish()
 
-/*                    //スナックバーとトーストの違いは、スナックバーはアクションを設定できる
-                    //戻るボタンでスケジュール一覧画面に戻る
-                    Snackbar.make(view, R.string.save_msg, Snackbar.LENGTH_SHORT)
-                        .setAction("戻る") { finish() }
-                        .setActionTextColor(Color.YELLOW)
-                        .show()
-**/
                         }
                         else -> {
                             realm.executeTransaction { db: Realm ->
@@ -141,11 +131,6 @@ class ScheduleEditActivity : AppCompatActivity()
 
                             finish()
 
-/*                    Snackbar.make(view, "修正しました", Snackbar.LENGTH_SHORT)
-                        .setAction("戻る") { finish() }
-                        .setActionTextColor(Color.YELLOW)
-                        .show()
-**/
                         }
                     }
                 } else { Toast.makeText(this, R.string.old_time_msg, Toast.LENGTH_SHORT).show() }
@@ -159,10 +144,6 @@ class ScheduleEditActivity : AppCompatActivity()
                     ?.findFirst()
                     ?.deleteFromRealm()
 
-                /*val str_sc = db.where<Schedule>().equalTo("id", scheduleId).findFirst()
-                val str: String? = str_sc?.title
-                println("このID " + scheduleId + " のtitleは " + str + " です")*/
-
                 var scheduleId_int: Int? = scheduleId?.toInt()
                 //スマートキャストでInt?をIntとして扱える（Int?とIntは別物である）
                 if (scheduleId_int is Int) {
@@ -173,11 +154,6 @@ class ScheduleEditActivity : AppCompatActivity()
 
             finish()
 
- /*           Snackbar.make(view, "削除しました", Snackbar.LENGTH_SHORT)
-                .setAction("戻る") { finish() }
-                .setActionTextColor(Color.YELLOW)
-                .show()
-**/
         }
 
         //日付選択ボタン
@@ -199,25 +175,6 @@ class ScheduleEditActivity : AppCompatActivity()
         }
     }
 
-    /*トリガー時刻のセット
-    private fun setAlarmManager(triggerTime: Calendar, scheduleId_int: Int) {
-
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this, AlarmBroadcastReceiver::class.java)
-        intent.putExtra("scheduleId", scheduleId_int)
-        val pending = PendingIntent.getBroadcast(this, scheduleId_int, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime.timeInMillis, pending)
-    }
-
-    //トリガー時刻のキャンセル
-    private fun cancelAlarmManager(scheduleId_int: Int) {
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this, AlarmBroadcastReceiver::class.java)
-        intent.putExtra("scheduleId", scheduleId_int)
-        val pending = PendingIntent.getBroadcast(this, scheduleId_int, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-        am.cancel(pending)
-    }*/
-
     //データベースを閉じる処理
     override fun onDestroy() {
         super.onDestroy()
@@ -234,5 +191,4 @@ class ScheduleEditActivity : AppCompatActivity()
             return null
         }
     }
-
 }

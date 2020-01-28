@@ -1,10 +1,6 @@
 package jp.trial.yu_ma.my_reminder
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Context.ALARM_SERVICE
-import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,7 +13,7 @@ class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0
     val context = context.applicationContext
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
-    //ドラッグ＆ドロップは使わない
+    //今はドラッグ＆ドロップは使わない
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
@@ -36,11 +32,6 @@ class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0
             db.where<Schedule>().equalTo("id", scheduleId)
                 ?.findFirst()
                 ?.deleteFromRealm()
-
-            //状態確認用
-/*            val str_sc = db.where<Schedule>().equalTo("id", scheduleId).findFirst()
-            val str: String? = str_sc?.title
-            println("このID " + scheduleId + " のtitleは " + str + " です")*/
         }
 
         //アラームのキャンセル
@@ -50,13 +41,7 @@ class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0
 
             var mAlarm = mAlarmManager()
             mAlarm.cancelAlarm(context, scheduleId_int)
-            /*val am = context.getSystemService(ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, AlarmBroadcastReceiver::class.java)
-            intent.putExtra("scheduleId", scheduleId_int)
-            var pending = PendingIntent.getBroadcast(context, scheduleId_int, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-            am.cancel(pending)*/
         }
-
     }
 
     override fun onChildDraw(

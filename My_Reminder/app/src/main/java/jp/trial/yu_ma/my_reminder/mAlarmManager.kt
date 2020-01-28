@@ -9,7 +9,7 @@ import java.util.*
 
 class mAlarmManager {
 
-    //トリガー時刻のセット
+    //ブロードキャストのアラームセット
     fun setAlarm(context: Context, triggerTime: Calendar, id: Int) {
 
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -20,7 +20,7 @@ class mAlarmManager {
         Log.d("ログ","setAlarm_ID" + id)
     }
 
-    //トリガー時刻のキャンセル
+    //ブロードキャストのアラームキャンセル
     fun cancelAlarm(context: Context, id: Int) {
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmBroadcastReceiver::class.java)

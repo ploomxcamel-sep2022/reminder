@@ -1,6 +1,5 @@
 package jp.trial.yu_ma.my_reminder
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

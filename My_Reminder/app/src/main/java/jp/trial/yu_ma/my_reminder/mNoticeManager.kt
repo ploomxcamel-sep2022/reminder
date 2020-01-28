@@ -49,5 +49,4 @@ class mNoticeManager {
         notificationManager.notify(intent_Id, notification)
 
     }
-
 }
