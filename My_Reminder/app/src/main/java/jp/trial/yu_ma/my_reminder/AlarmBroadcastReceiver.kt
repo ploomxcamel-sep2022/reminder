@@ -14,6 +14,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
 
         //ブロードキャストの種類を判別
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+
             //端末の再起動後の処理（アラームの再セット）
             Log.d("ログ","端末の起動を受信")
 
@@ -31,6 +32,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                         //時間の設定が無ければ何もしない
                     } else { //データベースから時間設定が存在するスケージュールを再設定
                         if (schedule_data.notice_switch == "YET") { //通知前のスケジュールか確認
+                            //アラームの再設定
                             var triggerTime = Calendar.getInstance()
                             triggerTime.time = schedule_data?.dateTime
                             var mAlarm = mAlarmManager()
@@ -50,6 +52,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
             var schedule_data: Schedule? = realm.where<Schedule>().equalTo("id", intent_Id).findFirst()
             if(schedule_data?.notice_switch != null) { //nullチェック
                 if (schedule_data.notice_switch == "YET") { //未通知か確認
+                    //データベースから通知パネルに表示するテキストと設定時間を取り出す
                     val text: String? = schedule_data?.title
                     val datetime: String? =
                         android.text.format.DateFormat.format("yyyy'年'MM'月'dd'日、'(EEE) kk'時'mm'分'", schedule_data?.dateTime)
